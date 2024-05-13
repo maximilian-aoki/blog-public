@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import './App.css';
+import { Link, Outlet } from 'react-router-dom';
 
-function App() {
+export default function Root() {
   const [url, setUrl] = useState('');
   const [method, setMethod] = useState('GET');
   const [body, setBody] = useState('');
@@ -50,9 +50,8 @@ function App() {
 
   return (
     <>
-      <h1>Vite + React</h1>
       <div className="card">
-        <form onSubmit={handleSubmit}>
+        {/* <form onSubmit={handleSubmit}>
           <label htmlFor="url">URL</label>
           <input type="text" id="url" value={url} onChange={handleUrlChange} />
           <select value={method} onChange={handleMethodChange}>
@@ -69,11 +68,22 @@ function App() {
             onChange={handleBodyChange}
           />
           <input type="submit" value="Submit" />
-        </form>
+        </form> */}
+        <ul>
+          <li>
+            <Link to="/">All Posts</Link>
+          </li>
+          <li>
+            <Link to="/sign-up">Sign Up</Link>
+          </li>
+          <li>
+            <Link to="/log-in">Log In</Link>
+          </li>
+        </ul>
+        <div>
+          <Outlet />
+        </div>
       </div>
-      <p className="read-the-docs">Hello World!</p>
     </>
   );
 }
-
-export default App;
