@@ -10,7 +10,7 @@ export default function Root() {
 
   const navigate = useNavigate();
 
-  function handleLogin(token) {
+  function handleLoginSuccess(token) {
     localStorage.setItem('jwt', token);
     setToken(token);
 
@@ -43,7 +43,7 @@ export default function Root() {
                   <Link to="/sign-up">Sign Up</Link>
                 </li>
                 <li>
-                  <button onClick={() => handleLogin('hello!')}>Log In</button>
+                  <Link to="/log-in">Log In</Link>
                 </li>
               </>
             )}
@@ -51,7 +51,7 @@ export default function Root() {
         </nav>
       </header>
       <main className="flex-1 p-6 bg-battleship">
-        <Outlet context={{ token }} />
+        <Outlet context={{ token, handleLoginSuccess }} />
       </main>
       <footer className="bg-true flex-none p-6 grid place-content-center">
         <p className="text-white font-bold">2024 Copyright Maximilian Aoki</p>
