@@ -1,9 +1,6 @@
 # Custom
 .eslintrc.cjs
 .prettierrc.json
-tailwind.config.js
-postcss.config.js
-.env
 
 # Logs
 logs
