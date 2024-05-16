@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export async function fetchInitialData(url, method, body) {
+export function fetchInitialData(url, method, body) {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -10,7 +10,7 @@ export async function fetchInitialData(url, method, body) {
     async function getData() {
       try {
         const response = await fetch(
-          `https://blog-api-maximilian.fly.dev/api/${url.toLowerCase()}`,
+          `https://blog-api-maximilian.fly.dev/api/public${url.toLowerCase()}`,
           {
             method: method,
             mode: 'cors',
@@ -40,7 +40,6 @@ export async function fetchInitialData(url, method, body) {
       }
     }
 
-    setLoading(true);
     getData();
 
     return () => {
