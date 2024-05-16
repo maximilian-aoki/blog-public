@@ -4,7 +4,7 @@ export default function AllPosts() {
   const data = useLoaderData();
   return (
     <>
-      <h1>All Posts</h1>
+      <h2>All Posts</h2>
     </>
   );
 }

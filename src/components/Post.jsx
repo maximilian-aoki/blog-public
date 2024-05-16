@@ -1,7 +1,10 @@
+import { useLoaderData } from 'react-router-dom';
+
 export default function Post() {
+  const data = useLoaderData();
   return (
     <>
-      <h1>One Post</h1>
+      <h2>Individual Post Page</h2>
     </>
   );
 }

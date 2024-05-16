@@ -1,10 +1,17 @@
-import { useState, useEffect } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 
 export default function Root() {
   return (
-    <>
-      <h1>Hello World!</h1>
-    </>
+    <div className="bg-slate-700">
+      <header>
+        <h1>header</h1>
+      </header>
+      <main>
+        <Outlet />
+      </main>
+      <footer>
+        <p>footer</p>
+      </footer>
+    </div>
   );
 }

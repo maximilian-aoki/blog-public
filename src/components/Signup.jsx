@@ -1,7 +1,10 @@
+import { useLoaderData } from 'react-router-dom';
+
 export default function Signup() {
+  const data = useLoaderData();
   return (
     <>
-      <h1>Signup Page</h1>
+      <h2>Signup Page</h2>
     </>
   );
 }

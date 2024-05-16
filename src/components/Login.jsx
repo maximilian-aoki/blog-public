@@ -1,7 +1,10 @@
+import { useLoaderData } from 'react-router-dom';
+
 export default function Login() {
+  const data = useLoaderData();
   return (
     <>
-      <h1>Login Page</h1>
+      <h2>Login Page</h2>
     </>
   );
 }
