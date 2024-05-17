@@ -1,5 +1,6 @@
 import { fetchInitialData } from '../utils/fetchUtils';
 import { Link } from 'react-router-dom';
+import { DateTime } from 'luxon';
 
 export default function AllPosts() {
   const { data, error, loading } = fetchInitialData('/posts', 'GET', null);
@@ -19,7 +20,12 @@ export default function AllPosts() {
               >
                 <Link to={`/posts/${post._id}`}>
                   <p className="font-bold">{post.title}</p>
-                  <hr className="border-olive mb-1" />
+                  <p className="text-sm italic">
+                    {DateTime.fromISO(post.createdAt).toLocaleString(
+                      DateTime.DATE_MED,
+                    )}
+                  </p>
+                  <hr className="border-olive mb-1 mt-1" />
                   <p>{post.overview}</p>
                 </Link>
               </li>
