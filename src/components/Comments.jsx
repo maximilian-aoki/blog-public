@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useOutletContext } from 'react-router-dom';
 import { fetchInitialData } from '../utils/fetchUtils';
-import { DateTime } from 'luxon';
+
+import CommentAny from './CommentAny';
+import CommentEdit from './CommentEdit';
 
 export default function Comments({ token, onRemount }) {
   // get initial load data based on url
@@ -25,6 +27,7 @@ export default function Comments({ token, onRemount }) {
   const [formLoading, setFormLoading] = useState(false);
 
   const [addCommentText, setAddCommentText] = useState('');
+  const [editCommentId, setEditCommentId] = useState(null);
   const [commentError, setCommentError] = useState('');
 
   function handleAddCommentChange(e) {
@@ -55,7 +58,6 @@ export default function Comments({ token, onRemount }) {
         );
 
         const data = await response.json();
-        console.log(data);
 
         if (data.error) {
           if (
@@ -72,7 +74,6 @@ export default function Comments({ token, onRemount }) {
         setCommentError('');
         onRemount();
       } catch (err) {
-        console.log(err);
         setFormLoading(false);
         setCommentError('something went wrong');
       }
@@ -82,8 +83,56 @@ export default function Comments({ token, onRemount }) {
   }
 
   function handleEditComment(e) {
-    e.preventDefault();
-    onRemount();
+    setEditCommentId(e.target.getAttribute('data-id'));
+  }
+
+  function handleCancelEditComment() {
+    setEditCommentId(null);
+  }
+
+  function handleSaveEditComment(newText) {
+    setFormLoading(true);
+    setCommentError('');
+
+    async function sendCommentPut() {
+      try {
+        const response = await fetch(
+          `https://blog-api-maximilian.fly.dev/api/public/${location.pathname}/comments/${editCommentId}/update`,
+          {
+            method: 'PUT',
+            mode: 'cors',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+              Authorization: `Bearer ${localStorage.getItem('public-jwt')}`,
+            },
+            body: JSON.stringify({ text: newText }),
+          },
+        );
+
+        const data = await response.json();
+
+        if (data.error) {
+          if (
+            data.error.name === 'JsonWebTokenError' ||
+            data.error === 'error parsing Bearer Token'
+          ) {
+            setFormLoading(false);
+            setCommentError('action not authorized');
+            return;
+          }
+        }
+
+        setFormLoading(false);
+        setCommentError('');
+        onRemount();
+      } catch (err) {
+        setFormLoading(false);
+        setCommentError('something went wrong');
+      }
+    }
+
+    sendCommentPut();
   }
 
   function handleDeleteComment(e) {
@@ -107,7 +156,6 @@ export default function Comments({ token, onRemount }) {
         );
 
         const data = await response.json();
-        console.log(data);
 
         if (data.error) {
           setFormLoading(false);
@@ -118,7 +166,6 @@ export default function Comments({ token, onRemount }) {
         setCommentError('');
         onRemount();
       } catch (err) {
-        console.log(err);
         setFormLoading(false);
         setCommentError('something went wrong');
       }
@@ -135,9 +182,9 @@ export default function Comments({ token, onRemount }) {
         <>
           <h2 className="text-lg mb-2 text-white font-bold">Comments</h2>
           <ul className="flex flex-col gap-2">
-            {token && (
+            {user && (
               <li className="p-2 bg-true rounded shadow text-white italic flex flex-col gap-2">
-                <p>share your thoughts:</p>
+                <p>share your thoughts, {user.name}:</p>
                 <form
                   onSubmit={handleAddComment}
                   className="flex flex-col gap-2"
@@ -165,36 +212,25 @@ export default function Comments({ token, onRemount }) {
               <li className="text-flame font-bold italic">{commentError}</li>
             )}
             {data.allComments.map((comment) => {
+              if (comment._id === editCommentId) {
+                return (
+                  <CommentEdit
+                    key={comment._id}
+                    comment={comment}
+                    user={user}
+                    onSave={handleSaveEditComment}
+                    onCancel={handleCancelEditComment}
+                  />
+                );
+              }
               return (
-                <li
+                <CommentAny
                   key={comment._id}
-                  className="p-2 bg-olive rounded shadow text-white flex flex-col gap-1"
-                >
-                  <p>{comment.text}</p>
-                  <p className="text-sm italic text-gray-300 text-end">
-                    {comment.author.fullName} -{' '}
-                    {DateTime.fromISO(comment.createdAt).toLocaleString(
-                      DateTime.DATE_MED,
-                    )}
-                  </p>
-                  {comment.author._id === user._id && (
-                    <div className="flex gap-2 justify-end">
-                      <button
-                        className="rounded px-2 text-white bg-true"
-                        data-id={comment._id}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="rounded px-2 text-white bg-flame"
-                        data-id={comment._id}
-                        onClick={handleDeleteComment}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  )}
-                </li>
+                  comment={comment}
+                  user={user}
+                  onEdit={handleEditComment}
+                  onDelete={handleDeleteComment}
+                />
               );
             })}
           </ul>

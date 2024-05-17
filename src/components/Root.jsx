@@ -13,8 +13,6 @@ export default function Root() {
   const navigate = useNavigate();
 
   function handleLoginSuccess(token, user) {
-    console.log(token);
-    console.log(user);
     localStorage.setItem('public-jwt', token);
     localStorage.setItem('public-user', JSON.stringify(user));
     setToken(token);

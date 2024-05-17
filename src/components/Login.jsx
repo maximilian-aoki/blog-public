@@ -42,7 +42,6 @@ export default function Login() {
         );
 
         const data = await response.json();
-        console.log(data);
 
         if (data.error) {
           setFormLoading(false);
@@ -54,7 +53,6 @@ export default function Login() {
         setLoginError('');
         handleLoginSuccess(data.token, data.user);
       } catch (err) {
-        console.log(err);
         setFormLoading(false);
         setLoginError('something went wrong');
       }

@@ -48,7 +48,6 @@ export default function Signup() {
         );
 
         const data = await response.json();
-        console.log(data);
 
         if (data.error) {
           setFormLoading(false);
@@ -60,7 +59,6 @@ export default function Signup() {
         setSignupError('');
         navigate('/log-in');
       } catch (err) {
-        console.log(err);
         setFormLoading(false);
         setSignupError('something went wrong');
       }
