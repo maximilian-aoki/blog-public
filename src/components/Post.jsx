@@ -13,7 +13,7 @@ export default function Post() {
   }
 
   return (
-    <div>
+    <div className="flex-initial w-fullscreen">
       <PostOnly />
       <hr className="border-white mb-2" />
       <Comments

@@ -42,26 +42,34 @@ export default function Root() {
         <nav className="">
           <ul className="flex gap-6">
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/" className="hover:font-bold">
+                Home
+              </Link>
             </li>
             {token ? (
               <li>
-                <button onClick={handleLogout}>Log Out</button>
+                <button onClick={handleLogout} className="hover:font-bold">
+                  Log Out
+                </button>
               </li>
             ) : (
               <>
                 <li>
-                  <Link to="/sign-up">Sign Up</Link>
+                  <Link to="/sign-up" className="hover:font-bold">
+                    Sign Up
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/log-in">Log In</Link>
+                  <Link to="/log-in" className="hover:font-bold">
+                    Log In
+                  </Link>
                 </li>
               </>
             )}
           </ul>
         </nav>
       </header>
-      <main className="flex-1 p-6 bg-battleship">
+      <main className="flex-1 p-6 bg-battleship flex justify-center">
         <Outlet context={{ token, handleLoginSuccess, user }} />
       </main>
       <footer className="bg-true flex-none p-6 grid place-content-center">

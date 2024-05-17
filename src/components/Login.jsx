@@ -62,7 +62,7 @@ export default function Login() {
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex-initial w-96 flex flex-col gap-2">
       <h2 className="text-xl text-white font-bold">Login Page</h2>
       <form
         onSubmit={handleLoginSubmit}

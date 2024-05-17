@@ -68,7 +68,7 @@ export default function Signup() {
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex-initial w-96 flex flex-col gap-2">
       <h2 className="text-xl text-white font-bold">Signup Page</h2>
       <form
         onSubmit={handleSignupSubmit}

@@ -10,6 +10,9 @@ export default {
         true: '#586ba4',
         flame: '#de541e',
       },
+      width: {
+        fullscreen: '700px',
+      },
     },
   },
   plugins: [],
