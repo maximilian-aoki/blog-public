@@ -52,17 +52,20 @@ export default function Comments({ token, onRemount }) {
         const data = await response.json();
         console.log(data);
 
-        if (
-          data.error.name === 'JsonWebTokenError' ||
-          data.error === 'error parsing Bearer Token'
-        ) {
-          setFormLoading(false);
-          setAddCommentError('action not authorized');
-          return;
+        if (data.error) {
+          if (
+            data.error.name === 'JsonWebTokenError' ||
+            data.error === 'error parsing Bearer Token'
+          ) {
+            setFormLoading(false);
+            setAddCommentError('action not authorized');
+            return;
+          }
         }
 
         setFormLoading(false);
         setAddCommentError('');
+        onRemount();
       } catch (err) {
         console.log(err);
         setFormLoading(false);
@@ -71,7 +74,6 @@ export default function Comments({ token, onRemount }) {
     }
 
     sendCommentPost();
-    // onRemount();
   }
 
   function handleEditComment(e) {
