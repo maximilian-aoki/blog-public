@@ -23,7 +23,7 @@ export default function PostOnly() {
           <p className="text-sm text-white italic">
             {data.post.author.fullName}
           </p>
-          <div className="p-2 my-4 text-olive bg-dutch rounded shadow">
+          <div className="p-4 my-4 text-olive bg-dutch rounded shadow">
             <p>{data.post.text}</p>
           </div>
         </>
