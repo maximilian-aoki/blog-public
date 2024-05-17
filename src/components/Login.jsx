@@ -52,7 +52,7 @@ export default function Login() {
 
         setFormLoading(false);
         setLoginError('');
-        handleLoginSuccess(data.token);
+        handleLoginSuccess(data.token, data.user);
       } catch (err) {
         console.log(err);
         setFormLoading(false);

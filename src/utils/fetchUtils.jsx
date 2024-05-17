@@ -17,7 +17,7 @@ export function fetchInitialData(url, method, body) {
             headers: {
               'Content-Type': 'application/json',
               Accept: 'application/json',
-              Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+              Authorization: `Bearer ${localStorage.getItem('public-jwt')}`,
             },
             body: ['POST', 'PUT'].includes(method)
               ? JSON.stringify({ message: body })
