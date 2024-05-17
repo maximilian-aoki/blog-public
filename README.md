@@ -1,8 +1,12 @@
-# React + Vite
+# Blog Site - Public Front End
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A public site for users to authenticate, view posts, and create/edit their own comments.
+Interfaces with the public backend API.
+Built with Vite + React + tailwindcss
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- integrates with the backend API through strict CORS policy
+- uses JWTs to store user credential on localStorage
+- view all published blog posts
+- create/edit own comments
