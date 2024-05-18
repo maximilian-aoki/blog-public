@@ -7,6 +7,9 @@ import CommentAny from './CommentAny';
 import CommentEdit from './CommentEdit';
 
 export default function Comments({ token, onRemount }) {
+  // use this whenever an expired jwt needs to be checked
+  const { handleLogout } = useOutletContext();
+
   // get initial load data based on url
   const location = useLocation();
   const { data, error, loading } = fetchInitialData(
@@ -58,6 +61,12 @@ export default function Comments({ token, onRemount }) {
         );
 
         const data = await response.json();
+
+        // if jwt expired
+        if (data && data.error && data.error.name === 'TokenExpiredError') {
+          // this is such bad practice - need to find a better way to logout after expired jwt
+          return handleLogout();
+        }
 
         if (data.error) {
           if (
@@ -112,6 +121,12 @@ export default function Comments({ token, onRemount }) {
 
         const data = await response.json();
 
+        // if jwt expired
+        if (data && data.error && data.error.name === 'TokenExpiredError') {
+          // this is such bad practice - need to find a better way to logout after expired jwt
+          return handleLogout();
+        }
+
         if (data.error) {
           if (
             data.error.name === 'JsonWebTokenError' ||
@@ -156,6 +171,12 @@ export default function Comments({ token, onRemount }) {
         );
 
         const data = await response.json();
+
+        // if jwt expired
+        if (data && data.error && data.error.name === 'TokenExpiredError') {
+          // this is such bad practice - need to find a better way to logout after expired jwt
+          return handleLogout();
+        }
 
         if (data.error) {
           setFormLoading(false);
